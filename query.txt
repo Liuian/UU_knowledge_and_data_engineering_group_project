@@ -1,0 +1,26 @@
+**Wikidata**
+
+SELECT ?movie
+       (SAMPLE(?label) AS ?title)
+       (SAMPLE(?year) AS ?year)
+       (GROUP_CONCAT(DISTINCT ?directorLabel; separator=", ") AS ?directors)
+       (GROUP_CONCAT(DISTINCT ?actorLabel; separator=", ") AS ?actors)
+       (SAMPLE(?imdbID) AS ?imdbID)
+WHERE {
+  ?movie wdt:P31 wd:Q11424 ;          # instance of film
+         wdt:P136 ?genre ;            # genre
+         wdt:P577 ?publicationDate ;
+         wdt:P345 ?imdbID .           # IMDb ID
+
+  ?genre wdt:P279* wd:Q24925 .        # science fiction / subclass
+
+  OPTIONAL { ?movie wdt:P57 ?director . ?director rdfs:label ?directorLabel FILTER(LANG(?directorLabel)="en") }
+  OPTIONAL { ?movie wdt:P161 ?actor . ?actor rdfs:label ?actorLabel FILTER(LANG(?actorLabel)="en") }
+
+  BIND(YEAR(?publicationDate) AS ?year)
+  FILTER(?year >= 1990 && ?year <= 2025)
+
+  ?movie rdfs:label ?label .
+  FILTER(LANG(?label) = "en")
+}
+GROUP BY ?movie
