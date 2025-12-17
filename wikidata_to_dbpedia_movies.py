@@ -6,7 +6,7 @@ import time
 # Config
 # =========================
 INPUT_CSV = "./data/wiki_5y/merged.csv"
-OUTPUT_CSV = "./data/movies_enriched.csv"
+OUTPUT_CSV = "./data/wiki_dp.csv"
 
 WIKIDATA_SPARQL = "https://query.wikidata.org/sparql"
 DBPEDIA_SPARQL = "https://dbpedia.org/sparql"
@@ -18,38 +18,26 @@ HEADERS = {
 # =========================
 # Helper: run SPARQL query
 # =========================
-# def run_sparql(endpoint, query):
-#     response = requests.get(
-#         endpoint,
-#         params={"query": query, "format": "json"},
-#         headers=HEADERS,
-#         timeout=60
-#     )
-#     response.raise_for_status()
-#     return response.json()["results"]["bindings"]
-
 def run_sparql(endpoint, query):
-    try:
-        response = requests.post(
-            endpoint,
-            data={"query": query, "format": "json"},
-            headers=HEADERS,
-            timeout=120
-        )
+    headers = {
+        "User-Agent": "MovieDataIntegration/1.0 (student project)",
+        "Accept": "application/sparql-results+json",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    response = requests.post(
+        endpoint,
+        data={"query": query},
+        headers=headers,
+        timeout=120
+    )
+
+    if response.status_code != 200:
+        print("HTTP status:", response.status_code)
+        print(response.text[:500])
         response.raise_for_status()
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTPError: {e}, content={response.text[:200]}")
-        raise
-    except requests.exceptions.RequestException as e:
-        print(f"Request failed: {e}")
-        raise
 
-    try:
-        return response.json()["results"]["bindings"]
-    except Exception as e:
-        print(f"JSON decode failed, response content:\n{response.text[:500]}")
-        raise
-
+    return response.json()["results"]["bindings"]
 
 def normalize_qid(value):
     if isinstance(value, str) and value.startswith("http"):

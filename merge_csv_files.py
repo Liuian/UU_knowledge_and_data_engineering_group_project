@@ -4,8 +4,8 @@ from pathlib import Path
 # =========================
 # Config
 # =========================
-INPUT_DIR = "./raw_data/wiki_5y"        # 放 CSV 的資料夾
-OUTPUT_CSV = "./raw_data/wiki_5y/merged.csv"       # 合併後的檔案
+INPUT_DIR = "./raw_data/wiki_5y"        
+OUTPUT_CSV = "./raw_data/wiki_5y/merged.csv"     
 
 # =========================
 # Main
