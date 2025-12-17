@@ -6,6 +6,7 @@ Files to use: `./data/wiki_db_cleaned.csv`, `./data/wiki_db_cleaned.ttl`
 - Link: https://query.wikidata.org
 - Data used: Years 2020-2025, 10 genres. Located in the folder `./data/wiki_5y/`
 
+- Querying from Wikidata:
 ```sparql
 SELECT ?movie
        (SAMPLE(?label) AS ?title)
@@ -65,6 +66,42 @@ GROUP BY ?movie
 | Romance film         | **Q1054574**  | V            | V             |
 | Crime film           | **Q959790**   | V            | V             |
 | Animated film        | **Q202866**   | V            | V             |
+
+- Testing sparql in dbpedia
+```sparql
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?dbpediaMovie ?title ?runtime ?language ?country ?abstract
+WHERE {
+  VALUES ?wikidata {
+    <http://www.wikidata.org/entity/Q217552>   
+    <http://www.wikidata.org/entity/Q219776>
+    <http://www.wikidata.org/entity/Q221113>
+    <http://www.wikidata.org/entity/Q80959>
+    <http://www.wikidata.org/entity/Q102448>
+    <http://www.wikidata.org/entity/Q464014>
+    <http://www.wikidata.org/entity/Q465607>
+    <http://www.wikidata.org/entity/Q219796>
+    <http://www.wikidata.org/entity/Q83495>
+    <http://www.wikidata.org/entity/Q220376>   
+  }
+
+  ?dbpediaMovie owl:sameAs ?wikidata ;
+                rdfs:label ?title .
+
+  OPTIONAL { ?dbpediaMovie dbo:runtime ?runtime . }
+  OPTIONAL { ?dbpediaMovie dbo:language ?language . }
+  OPTIONAL { ?dbpediaMovie dbo:country ?country . }
+  OPTIONAL {
+    ?dbpediaMovie dbo:abstract ?abstract .
+    FILTER(LANG(?abstract) = "en")
+  }
+
+  FILTER(LANG(?title) = "en")
+}
+```
 
 **2. Merge the 10 CSV files**
 - Using the script: `merge_csv_files.py`
