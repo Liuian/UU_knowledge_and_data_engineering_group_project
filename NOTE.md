@@ -1,3 +1,4 @@
+# Part1 Data Transformation--Ian
 Files to use: `./data/wiki_db_cleaned.csv`, `./data/wiki_db_cleaned.ttl`
 
 ## Processing Steps
@@ -118,3 +119,29 @@ WHERE {
 **5. Convert to a Turtle file**
 - Using the script: `csv_to_rdf.py`
 - Output file: `./data/wiki_db_cleaned.ttl`
+
+# Part2 Ontology Creation--Yiquan
+
+## Updates about datas
+I added genres and runtime into turtle file and now a movie may have more than one genres like:
+```
+ex:Papa ex:actor ex:Huang_Bo,
+        ex:Jo_Kuk,
+        ex:Ning_Chang,
+        ex:Sean_Lau,
+        ex:Wan_Qian,
+        ex:Wang_Qingxiang,
+        ex:Wang_Xun,
+        ex:Yan_Ni,
+        ex:Zixian_Zhang ;
+    ex:director ex:Philip_Yung ;
+    ex:genre ex:comedy,
+        ex:drama ;
+    ex:runtime "1.0"^^xsd:float ;
+    ex:title "''Papa''",
+        "Papa" ;
+    ex:year "2023"^^xsd:gYear,
+        "2024"^^xsd:gYear .
+```
+## Created ontology
+~/ontology/ontology.ttl contains the ontology

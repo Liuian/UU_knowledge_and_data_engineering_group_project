@@ -45,11 +45,11 @@ ex:runtime a owl:DatatypeProperty ;
 ex:Movie rdfs:subClassOf [
   a owl:Restriction ;
   owl:onProperty ex:title ;
-  owl:someValuesFrom xsd:string
+  owl:someValuesFrom rdfs:Literal
 ] .
 
 ex:Movie rdfs:subClassOf [
   a owl:Restriction ;
   owl:onProperty ex:year ;
-  owl:someValuesFrom xsd:gYear
+  owl:someValuesFrom rdfs:Literal
 ] .
