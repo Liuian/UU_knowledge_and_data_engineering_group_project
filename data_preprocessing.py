@@ -6,8 +6,8 @@ import numpy as np
 # =========================
 # Configurations
 # =========================
-INPUT_CSV = "./data/wiki_db.csv"
-OUTPUT_CSV = "./data/wiki_db_cleaned.csv"
+INPUT_CSV = "./data/wiki_db_2.csv"
+OUTPUT_CSV = "./data/wiki_db_cleaned_2.csv"
 COVERAGE_CSV = "./data/wiki_db_column_coverage.csv"
 
 #%%

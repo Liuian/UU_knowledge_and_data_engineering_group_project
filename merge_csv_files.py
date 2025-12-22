@@ -1,11 +1,13 @@
+import re
+
 import pandas as pd
 from pathlib import Path
 
 # =========================
 # Config
 # =========================
-INPUT_DIR = "./raw_data/wiki_5y"        
-OUTPUT_CSV = "./raw_data/wiki_5y/merged.csv"     
+INPUT_DIR = "./data/wiki_5y"
+OUTPUT_CSV = "./data/wiki_5y/merged_2.csv"
 
 # =========================
 # Main
@@ -25,8 +27,10 @@ def main():
 
     dfs = []
     for csv_file in csv_files:
+        genre = re.match(r"^wiki_(.+)_5y\.csv$", csv_file.name).group(1)
         print(f"Reading {csv_file.name}")
         df = pd.read_csv(csv_file)
+        df["genre"] = genre
         dfs.append(df)
 
     merged_df = pd.concat(dfs, ignore_index=True)

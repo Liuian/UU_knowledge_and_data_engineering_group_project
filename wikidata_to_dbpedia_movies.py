@@ -5,8 +5,8 @@ import time
 # =========================
 # Config
 # =========================
-INPUT_CSV = "./data/wiki_5y/merged.csv"
-OUTPUT_CSV = "./data/wiki_db.csv"
+INPUT_CSV = "./data/wiki_5y/merged_2.csv"
+OUTPUT_CSV = "./data/wiki_db_2.csv"
 
 WIKIDATA_SPARQL = "https://query.wikidata.org/sparql"
 DBPEDIA_SPARQL = "https://dbpedia.org/sparql"

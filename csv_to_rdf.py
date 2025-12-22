@@ -4,8 +4,8 @@ from rdflib.namespace import XSD
 import re
 
 # ---------- Settings ----------
-CSV_FILE = "./data/wiki_db_cleaned.csv"
-OUTPUT_FILE = "./data/wiki_db_cleaned.ttl"
+CSV_FILE = "./data/wiki_db_cleaned_2.csv"
+OUTPUT_FILE = "./data/wiki_db_cleaned_2.ttl"
 BASE_URI = "http://example.org/movie/"
 ex = Namespace(BASE_URI)
 
@@ -43,8 +43,8 @@ with open(CSV_FILE, newline="", encoding="utf-8") as f:
 
         # runtime (check empty and numeric)
         runtime = row.get("runtime", "").strip()
-        if runtime.isdigit():
-            g.add((movie_uri, ex.runtime, Literal(runtime, datatype=XSD.integer)))
+        if runtime.replace(".","").isdigit():
+            g.add((movie_uri, ex.runtime, Literal(runtime, datatype=XSD.float)))
 
         # directors (multiple allowed, skip empty)
         directors = row.get("directors", "").strip()
@@ -53,6 +53,13 @@ with open(CSV_FILE, newline="", encoding="utf-8") as f:
                 d = d.strip()
                 if d:
                     g.add((movie_uri, ex.director, to_uri(d)))
+
+        genres = row.get("genre", "").strip()
+        if directors:
+            for d in re.split(r"[|,]", genres):
+                d = d.strip()
+                if d:
+                    g.add((movie_uri, ex.genre, to_uri(d)))
 
         # actors (multiple allowed, skip empty)
         actors = row.get("actors", "").strip()
