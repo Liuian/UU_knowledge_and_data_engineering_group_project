@@ -145,3 +145,20 @@ ex:Papa ex:actor ex:Huang_Bo,
 ```
 ## Created ontology
 ~/ontology/ontology.ttl contains the ontology
+
+# Part3 SPARQL-Melissa
+I added two files:
+  -queries.sparql: list of all the generic queries 
+  -run_sparql.py: python code to test all the queries
+
+The queries implemented are:
+  -Movie similarity (shared genre/actor/director)
+  -Movies sharing actors
+  -Movies with specific genres
+  -Movies by a specific director
+  -Movies within a year range
+  -Movies by runtime
+  -Movies with keywords in the title
+  -Most recent movie per person
+  -Movies excluding a specific genre
+  -Movies with a genre but excluding a specific actor
